@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,7 +8,6 @@ import Link from "next/link";
 import React, { useState } from "react";
 
 export default function SignUp() {
-    const loginPath = "auth/loging";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -18,9 +17,8 @@ export default function SignUp() {
     e.preventDefault();
     if (password === confirmPassword) {
       console.log("password match");
-    }
-    else {
-        console.log("Invalid password");
+    } else {
+      console.log("Invalid password");
     }
   };
 
@@ -99,7 +97,7 @@ export default function SignUp() {
                 SignUp
               </Button>
             </form>
-            <Link href={loginPath}>
+            <Link href="/auth/login">
               <Button className="w-full">login</Button>
             </Link>
           </CardContent>
