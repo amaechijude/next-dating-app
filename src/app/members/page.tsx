@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Button } from "@heroui/button";
 
 export default function MembersPage() {
     return (
@@ -7,6 +8,11 @@ export default function MembersPage() {
             Welcome to members page
             
       <Link href="/">Home</Link>
+      <Button
+      color="danger"
+      variant="bordered"
+      startContent={"hi"}
+      >Click me</Button>
         </div>
         </>
     )
