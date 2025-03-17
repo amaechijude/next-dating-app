@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -6,9 +6,9 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 
 export default function Navbar() {
-    const loginUrl = "/auth/login";
-    const signupUrl = "/auth/signup";
-    // const logoutUrl = "/auth/logout";
+  const loginUrl = "/auth/login";
+  const signupUrl = "/auth/signup";
+  // const logoutUrl = "/auth/logout";
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
@@ -17,26 +17,42 @@ export default function Navbar() {
         {/* Brand Logo */}
         <Link href="/">
           <motion.div
-            whileHover={{ scale: 1.1 }}
+            whileHover={{ scale: 1.2, backgroundColor: "gray" }}
             className="text-xl font-bold text-blue-600"
           >
-            Connection
+            <Button variant={"outline"} size={"lg"}>
+              CONNECTION
+            </Button>
           </motion.div>
         </Link>
 
         {/* Navigation Links */}
         <div className="flex space-x-4">
           {isLoggedIn ? (
-            <Button onClick={() => setIsLoggedIn(false)} variant="outline">
-              Logout
-            </Button>
+            <motion.div whileHover={{ scale: 1.2, backgroundColor: "gray" }}>
+              <Button onClick={() => setIsLoggedIn(false)} variant="outline">
+                Logout
+              </Button>
+            </motion.div>
           ) : (
             <>
               <Link href={loginUrl}>
-                <Button variant="outline">Login</Button>
+                <motion.div
+                  whileHover={{ scale: 1.2, backgroundColor: "beige" }}
+                  className="text-xl font-serif"
+                >
+                  <Button variant="outline" onClick={() => setIsLoggedIn(true)}>
+                    Login
+                  </Button>
+                </motion.div>
               </Link>
               <Link href={signupUrl}>
-                <Button>Register</Button>
+                <motion.div
+                  whileHover={{ scale: 1.2, backgroundColor: "beige" }}
+                  className="text-xl font-serif"
+                >
+                  <Button variant={"outline"}>Register</Button>
+                </motion.div>
               </Link>
             </>
           )}

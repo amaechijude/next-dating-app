@@ -27,9 +27,7 @@ export default function LoginPage() {
       >
         <Card className="shadow-lg rounded-2xl">
           <CardHeader>
-            <CardTitle className="text-center text-2xl font-bold">
-              Login
-            </CardTitle>
+            <CardTitle className="text-center text-2xl font-bold"></CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
