@@ -3,18 +3,20 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+type LoginInput = {
+  email: string;
+  password: string;
+}
 
 export default function LoginPage() {
   const signupPath = "/auth/signup";
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log({ email, password });
+  const {register, handleSubmit, formState: { errors },} = useForm<LoginInput>();
+  const onSubmit: SubmitHandler<LoginInput> = (data) => {
+    console.log(data);
   };
 
   return (
@@ -27,10 +29,12 @@ export default function LoginPage() {
       >
         <Card className="shadow-lg rounded-2xl">
           <CardHeader>
-            <CardTitle className="text-center text-2xl font-bold"></CardTitle>
+            <CardTitle className="text-center text-2xl font-bold">
+              Login
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700">
                   Email
@@ -38,10 +42,9 @@ export default function LoginPage() {
                 <Input
                   type="email"
                   placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
+                  {...register("email", {required:true})}
                 />
+                {errors.email && <span>Email is Required</span>}
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">
@@ -50,9 +53,7 @@ export default function LoginPage() {
                 <Input
                   type="password"
                   placeholder="Enter your password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
+                  {...register("password", {required: true})}
                 />
               </div>
               <Button type="submit" className="w-full">

@@ -5,32 +5,42 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+type SignupInput = {
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
 
 export default function SignUp() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [userName, setUserName] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignupInput>();
+  const onSubmit: SubmitHandler<SignupInput> = async (data) => {
+    console.log(data);
+    // process login
 
-  const passworValidation = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (password === confirmPassword) {
-      console.log("password match");
-    } else {
-      console.log("Invalid password");
+    if (data.password != data.confirmPassword) {
+      alert("passwoerd mismatch")
     }
+    // const response = await fetch("/apl/v1/signup", {
+    //   method: "POST",
+    //   body: JSON.stringify({
+    //     username: data.username,
+    //     email: data.email,
+    //     password: data.password,
+    //     confirmPassword: data.confirmPassword,
+    //   }),
+    //   // headers: //csrftoken
+    // });
+    // const responseData = await response.json();
+    // process
   };
-
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    console.log({
-      email,
-      password,
-      confirmPassword,
-      userName,
-    });
-  }
 
   return (
     <div className="flex min-h-screen justify-center p-4">
@@ -47,7 +57,7 @@ export default function SignUp() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700">
                   Username
@@ -55,43 +65,36 @@ export default function SignUp() {
                 <Input
                   type="text"
                   placeholder="Enter username"
-                  value={userName}
-                  onChange={(e) => setUserName(e.target.value)}
-                  required
+                  {...register("username", { required: true })}
                 />
+                {errors.username && <span>Username is required</span>}
                 <label className="block text-sm font-medium text-gray-700">
                   Email
                 </label>
                 <Input
                   type="email"
                   placeholder="Enter eail"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
+                  {...register("email", { required: true })}
                 />
+                {errors.email && <span>Email is required</span>}
                 <label className="block text-sm font-medium text-gray-700">
                   Password
                 </label>
                 <Input
                   type="password"
                   placeholder="Enter Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
+                  {...register("password", { required: true })}
                 />
+                {errors.password && <span>Password is required</span>}
                 <label className="block text-sm font-medium text-gray-700">
                   Confirm Password
                 </label>
                 <Input
                   type="password"
-                  placeholder="Enter Password"
-                  value={confirmPassword}
-                  onChange={(e) => {
-                    passworValidation(e);
-                    setConfirmPassword(e.target.value);
-                  }}
-                  required
+                  placeholder="Confirm Password"
+                  {...register("confirmPassword", { required: true })}
                 />
+                {errors.confirmPassword && <span>Confirm Password is required</span>}
               </div>
               <Button type="submit" className="w-full">
                 SignUp
