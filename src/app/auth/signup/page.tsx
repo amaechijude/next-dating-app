@@ -73,7 +73,7 @@ export default function SignUp() {
                 </label>
                 <Input
                   type="email"
-                  placeholder="Enter eail"
+                  placeholder="Enter email"
                   {...register("email", { required: true })}
                 />
                 {errors.email && <span>Email is required</span>}
