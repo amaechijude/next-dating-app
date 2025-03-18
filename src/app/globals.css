@@ -1,1 +1,5 @@
 @import "tailwindcss";
+
+.breakLine {
+    margin: 2px;
+}

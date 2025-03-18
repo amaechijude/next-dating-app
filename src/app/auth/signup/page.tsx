@@ -7,21 +7,26 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SignupSchema, signupSchema} from "@/lib/schemas/SignUpSchema";
 
-type SignupInput = {
-  username: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-};
+// type SignupInput = {
+//   username: string;
+//   email: string;
+//   password: string;
+//   confirmPassword: string;
+// };
 
 export default function SignUp() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignupInput>();
-  const onSubmit: SubmitHandler<SignupInput> = async (data) => {
+  } = useForm({
+    resolver: zodResolver(signupSchema)
+  });
+
+  const onSubmit: SubmitHandler<SignupSchema> = async (data) => {
     console.log(data);
     // process login
 
@@ -67,7 +72,7 @@ export default function SignUp() {
                   placeholder="Enter username"
                   {...register("username", { required: true })}
                 />
-                {errors.username && <span>Username is required</span>}
+                {errors.username && <span>{ errors.username.message } </span>}
                 <label className="block text-sm font-medium text-gray-700">
                   Email
                 </label>
@@ -76,7 +81,7 @@ export default function SignUp() {
                   placeholder="Enter email"
                   {...register("email", { required: true })}
                 />
-                {errors.email && <span>Email is required</span>}
+                {errors.email && <span>{ errors.email.message }</span>}
                 <label className="block text-sm font-medium text-gray-700">
                   Password
                 </label>
@@ -85,7 +90,7 @@ export default function SignUp() {
                   placeholder="Enter Password"
                   {...register("password", { required: true })}
                 />
-                {errors.password && <span>Password is required</span>}
+                {errors.password && <span>{ errors.password.message }</span>}
                 <label className="block text-sm font-medium text-gray-700">
                   Confirm Password
                 </label>
@@ -94,12 +99,13 @@ export default function SignUp() {
                   placeholder="Confirm Password"
                   {...register("confirmPassword", { required: true })}
                 />
-                {errors.confirmPassword && <span>Confirm Password is required</span>}
+                {errors.confirmPassword && <span>{ errors.confirmPassword.message }</span>}
               </div>
-              <Button type="submit" className="w-full">
+              <Button type="submit" className="w-full bg-gray-50" variant={"outline"}>
                 SignUp
               </Button>
             </form>
+            <br className="breakLine"/>
             <Link href="/auth/login">
               <Button className="w-full">login</Button>
             </Link>

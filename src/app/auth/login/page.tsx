@@ -6,16 +6,15 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form";
-
-type LoginInput = {
-  email: string;
-  password: string;
-}
+import { LoginSchema, loginSchema } from "@/lib/schemas/LoginSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function LoginPage() {
   const signupPath = "/auth/signup";
-  const {register, handleSubmit, formState: { errors },} = useForm<LoginInput>();
-  const onSubmit: SubmitHandler<LoginInput> = (data) => {
+  const {register, handleSubmit, formState: { errors },} = useForm({
+    resolver: zodResolver(loginSchema)
+  });
+  const onSubmit: SubmitHandler<LoginSchema> = (data) => {
     console.log(data);
   };
 
@@ -42,7 +41,7 @@ export default function LoginPage() {
                 <Input
                   type="email"
                   placeholder="Enter your email"
-                  {...register("email", {required:true})}
+                  {...register("email", { required: true })}
                 />
                 {errors.email && <span>Email is Required</span>}
               </div>
@@ -53,13 +52,14 @@ export default function LoginPage() {
                 <Input
                   type="password"
                   placeholder="Enter your password"
-                  {...register("password", {required: true})}
+                  {...register("password", { required: true })}
                 />
               </div>
-              <Button type="submit" className="w-full">
+              <Button type="submit" className="w-full bg-gray-100" variant={"outline"}>
                 Login
               </Button>
             </form>
+            <br className="breakLine" />
             <Link href={signupPath}>
               <Button className="w-full">Register</Button>
             </Link>
