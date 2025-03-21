@@ -27,24 +27,25 @@ export default function SignUp() {
   });
 
   const onSubmit: SubmitHandler<SignupSchema> = async (data) => {
-    console.log(data);
-    // process login
-
-    if (data.password != data.confirmPassword) {
-      alert("passwoerd mismatch")
+  
+    // process logi
+    const res = await fetch("/api/v1/auth/signup", {
+      method: "POST",
+      body: JSON.stringify({
+        username: data.username,
+        email: data.email,
+        password: data.password,
+        confirmPassword: data.confirmPassword,
+      }),
+      // headers: //csrftoken
+    });
+    const resData = await res.json();
+    if (!res.ok) {
+      console.log(resData);
+    } else {
+      console.log("Signup succefull");
+      console.log(resData);
     }
-    // const response = await fetch("/apl/v1/signup", {
-    //   method: "POST",
-    //   body: JSON.stringify({
-    //     username: data.username,
-    //     email: data.email,
-    //     password: data.password,
-    //     confirmPassword: data.confirmPassword,
-    //   }),
-    //   // headers: //csrftoken
-    // });
-    // const responseData = await response.json();
-    // process
   };
 
   return (

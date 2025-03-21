@@ -20,7 +20,7 @@ export default function Navbar() {
             whileHover={{ scale: 1.2, backgroundColor: "gray" }}
             className="text-xl font-bold text-blue-600"
           >
-            <Button variant={"outline"} size={"lg"}>
+            <Button variant={"outline"} size={"lg"} color="gray">
               CONNECTION
             </Button>
           </motion.div>
@@ -41,7 +41,7 @@ export default function Navbar() {
                   whileHover={{ scale: 1.2, backgroundColor: "beige" }}
                   className="text-xl font-serif"
                 >
-                  <Button variant="outline" onClick={() => setIsLoggedIn(true)}>
+                  <Button variant="outline" onClick={() => setIsLoggedIn(true)} color="gray">
                     Login
                   </Button>
                 </motion.div>
@@ -51,7 +51,7 @@ export default function Navbar() {
                   whileHover={{ scale: 1.2, backgroundColor: "beige" }}
                   className="text-xl font-serif"
                 >
-                  <Button variant={"outline"}>Register</Button>
+                  <Button variant={"outline"} color="gray">Register</Button>
                 </motion.div>
               </Link>
             </>
