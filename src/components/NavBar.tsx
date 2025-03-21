@@ -5,12 +5,21 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { motion } from "framer-motion";
 
+
 export default function Navbar() {
   const loginUrl = "/auth/login";
   const signupUrl = "/auth/signup";
-  // const logoutUrl = "/auth/logout";
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  async function logOut() {
+    const res = await fetch("/api/v1/auth/logout", {
+      method: "POST",
+    });
+    if (res.ok) {
+      setIsLoggedIn(false);
+    }
+  }
+  
   return (
     <nav className="bg-white shadow-md p-4">
       <div className="container mx-auto flex justify-between items-center">
@@ -30,7 +39,7 @@ export default function Navbar() {
         <div className="flex space-x-4">
           {isLoggedIn ? (
             <motion.div whileHover={{ scale: 1.2, backgroundColor: "gray" }}>
-              <Button onClick={() => setIsLoggedIn(false)} variant="outline">
+              <Button onClick={logOut} variant="outline">
                 Logout
               </Button>
             </motion.div>
@@ -61,3 +70,4 @@ export default function Navbar() {
     </nav>
   );
 }
+

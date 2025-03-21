@@ -14,7 +14,7 @@ model User {
   id              String  @id @default(uuid())
   username        String @default("user")
   email           String @unique
-  passwordHash    String?
+  passwordHash    String
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt @default(now())
   lastloginDate   DateTime  @default(now())

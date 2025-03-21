@@ -14,8 +14,19 @@ export default function LoginPage() {
   const {register, handleSubmit, formState: { errors },} = useForm({
     resolver: zodResolver(loginSchema)
   });
-  const onSubmit: SubmitHandler<LoginSchema> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<LoginSchema> = async (data) => {
+    const res = await fetch("/api/v1/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data)
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to login");
+    }
+
   };
 
   return (
@@ -69,3 +80,5 @@ export default function LoginPage() {
     </div>
   );
 }
+
+
