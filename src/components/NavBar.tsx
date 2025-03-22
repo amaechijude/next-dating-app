@@ -2,24 +2,15 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
 import { motion } from "framer-motion";
+import { useSession, signIn, signOut } from "next-auth/react"
 
 
 export default function Navbar() {
   const loginUrl = "/auth/login";
   const signupUrl = "/auth/signup";
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { data: session } = useSession();
 
-  async function logOut() {
-    const res = await fetch("/api/v1/auth/logout", {
-      method: "POST",
-    });
-    if (res.ok) {
-      setIsLoggedIn(false);
-    }
-  }
-  
   return (
     <nav className="bg-white shadow-md p-4">
       <div className="container mx-auto flex justify-between items-center">
@@ -37,9 +28,9 @@ export default function Navbar() {
 
         {/* Navigation Links */}
         <div className="flex space-x-4">
-          {isLoggedIn ? (
+          { session ? (
             <motion.div whileHover={{ scale: 1.2, backgroundColor: "gray" }}>
-              <Button onClick={logOut} variant="outline">
+              <Button onClick={() => signOut()} variant="outline">
                 Logout
               </Button>
             </motion.div>
@@ -50,7 +41,7 @@ export default function Navbar() {
                   whileHover={{ scale: 1.2, backgroundColor: "beige" }}
                   className="text-xl font-serif"
                 >
-                  <Button variant="outline" onClick={() => setIsLoggedIn(true)} color="gray">
+                  <Button variant="outline" onClick={() => signIn()} color="gray">
                     Login
                   </Button>
                 </motion.div>
