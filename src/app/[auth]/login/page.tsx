@@ -10,10 +10,11 @@ import { LoginSchema, loginSchema } from "@/lib/schemas/LoginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function LoginPage() {
-  const signupPath = "/auth/signup";
+
   const {register, handleSubmit, formState: { errors },} = useForm({
     resolver: zodResolver(loginSchema)
   });
+
   const onSubmit: SubmitHandler<LoginSchema> = async (data) => {
     const res = await fetch("/api/v1/auth/login", {
       method: "POST",
@@ -66,12 +67,16 @@ export default function LoginPage() {
                   {...register("password", { required: true })}
                 />
               </div>
-              <Button type="submit" className="w-full bg-gray-100" variant={"outline"}>
+              <Button
+                type="submit"
+                className="w-full bg-gray-100"
+                variant={"outline"}
+              >
                 Login
               </Button>
             </form>
             <br className="breakLine" />
-            <Link href={signupPath}>
+            <Link href="/signup">
               <Button className="w-full">Register</Button>
             </Link>
           </CardContent>

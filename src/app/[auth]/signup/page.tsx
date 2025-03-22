@@ -107,7 +107,7 @@ export default function SignUp() {
               </Button>
             </form>
             <br className="breakLine"/>
-            <Link href="/auth/login">
+            <Link href="/login">
               <Button className="w-full">login</Button>
             </Link>
           </CardContent>
